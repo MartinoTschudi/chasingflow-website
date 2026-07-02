@@ -1,0 +1,542 @@
+/* ==========================================================================
+   Chasing Flow — chasingflow.ch
+   Page styles + design tokens. The scene itself is painted by main.js
+   into the fixed full-viewport canvas (#cv).
+   ========================================================================== */
+
+:root {
+  /* ink */
+  --ink: #0d3838;
+  --ink-hunt: #143028;
+  --ink-lake: #043f3a;
+  --ink-passion: #045048;
+  --ink-contact: #073f38;
+  /* accents */
+  --amber: #ffb52e;
+  --amber-kicker: #8a5800;
+  --amber-ink: #3a2600;
+  --teal: #00c2b8;
+  --teal-kicker: #02655e;
+  --teal-ink: #00312e;
+  --pink: #ff4f8b;
+  /* scene */
+  --sky: #aee4ff;
+  /* type */
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-serif: 'Instrument Serif', serif;
+  --font-mono: ui-monospace, Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body { overflow-x: clip; }
+
+body {
+  margin: 0;
+  background: var(--sky); /* no-JS fallback: the flat morning blue */
+  font-family: var(--font-display);
+  color: var(--ink);
+}
+
+a:focus-visible {
+  outline: 2px solid rgba(13, 56, 56, .7);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* --- fixed scene canvas --------------------------------------------------- */
+
+#cv {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+}
+
+/* --- fixed flow-meter HUD --------------------------------------------------
+   The difference blend is how it stays legible over sky and water. */
+
+.hud {
+  position: fixed;
+  top: 18px;
+  right: 20px;
+  z-index: 5;
+  pointer-events: none;
+  text-align: right;
+  mix-blend-mode: difference;
+  color: #fff;
+  font-family: var(--font-mono);
+}
+.hud-flow { font-size: 16px; letter-spacing: .08em; font-weight: 600; }
+.hud-zone { font-size: 9px; letter-spacing: .18em; margin-top: 3px; opacity: .75; }
+
+/* --- content column -------------------------------------------------------- */
+
+.content { position: relative; z-index: 1; }
+
+/* --- hero — morning --------------------------------------------------------- */
+
+.hero {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px 22px 30px;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+}
+.hero-label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: rgba(13, 56, 56, .65);
+  line-height: 1.8;
+}
+.hero-title {
+  font-size: clamp(46px, 11vw, 104px);
+  font-weight: 800;
+  line-height: .96;
+  letter-spacing: -.015em;
+  margin: 0;
+}
+.hero-title .hl { display: inline-block; will-change: transform; }
+.hueflow { animation: hueflow 6s ease-in-out infinite; }
+.hero-tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(19px, 4.6vw, 28px);
+  margin: 16px 0 0;
+  color: rgba(13, 56, 56, .8);
+}
+.cue { text-align: center; transition: opacity .6s; }
+.cue span {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: rgba(13, 56, 56, .55);
+  animation: cue 2.2s ease-in-out infinite;
+}
+
+/* --- manifesto --------------------------------------------------------------- */
+
+.manifesto {
+  min-height: 52vh;
+  min-height: 52svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 26px;
+  max-width: 620px;
+  margin: 0 auto;
+}
+.manifesto-line {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(24px, 5.6vw, 36px);
+  line-height: 1.25;
+  color: var(--ink);
+}
+.manifesto-kicker {
+  margin: 18px 0 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: rgba(13, 56, 56, .6);
+}
+
+/* --- app sections (HuntMate / Lake Zürich) ----------------------------------- */
+
+.app {
+  padding: 40px 22px 0;
+  max-width: 620px;
+  margin: 0 auto;
+}
+.app--lake {
+  /* holds the viewport in open water while the crossing plays */
+  padding: 68vh 22px 0;
+  padding: 68svh 22px 0;
+}
+.app-kicker {
+  margin: 0 0 18px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+}
+.app--hunt .app-kicker { color: var(--amber-kicker); }
+.app--lake .app-kicker { color: var(--teal-kicker); }
+
+.card {
+  background: rgba(255, 255, 255, .55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(20, 60, 30, .15);
+  border-radius: 26px;
+  padding: 26px;
+  box-shadow: 0 16px 36px rgba(60, 90, 20, .15);
+  animation: bob 7s ease-in-out infinite alternate;
+}
+.card--lake {
+  background: rgba(255, 255, 255, .5);
+  border-color: rgba(0, 140, 130, .28);
+  box-shadow: 0 16px 40px rgba(0, 110, 100, .18);
+  animation: bob 8s ease-in-out .8s infinite alternate;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.icon-slot {
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
+  flex: none;
+}
+.card--hunt .icon-slot {
+  background: repeating-linear-gradient(45deg, rgba(255, 181, 46, .2) 0 9px, rgba(255, 181, 46, .42) 9px 18px);
+  border: 1px solid rgba(200, 140, 20, .5);
+}
+.card--lake .icon-slot {
+  background: repeating-linear-gradient(45deg, rgba(0, 194, 184, .16) 0 9px, rgba(0, 194, 184, .36) 9px 18px);
+  border: 1px solid rgba(0, 150, 140, .5);
+}
+.app-name {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+}
+.card--hunt .app-name { color: var(--ink-hunt); }
+.card--lake .app-name { color: var(--ink-lake); }
+.app-meta {
+  margin: 5px 0 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .15em;
+}
+.card--hunt .app-meta { color: rgba(20, 48, 40, .55); }
+.card--lake .app-meta { color: rgba(4, 63, 58, .6); }
+
+.app-blurb {
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 16px 0 18px;
+}
+.card--hunt .app-blurb { color: rgba(20, 48, 40, .85); }
+.card--lake .app-blurb { color: rgba(4, 63, 58, .85); }
+
+.shot-slot {
+  height: min(62vh, 400px);
+  height: min(62svh, 400px);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+}
+.card--hunt .shot-slot {
+  background: repeating-linear-gradient(45deg, rgba(255, 181, 46, .12) 0 10px, rgba(255, 181, 46, .24) 10px 20px);
+  border: 1px solid rgba(200, 140, 20, .4);
+  color: rgba(20, 48, 40, .6);
+}
+.card--lake .shot-slot {
+  background: repeating-linear-gradient(45deg, rgba(0, 194, 184, .1) 0 10px, rgba(0, 194, 184, .2) 10px 20px);
+  border: 1px solid rgba(0, 150, 140, .4);
+  color: rgba(4, 63, 58, .6);
+}
+
+.pill {
+  display: inline-flex;
+  margin-top: 18px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-decoration: none;
+  font-weight: 700;
+}
+.pill--hunt { background: var(--amber); color: var(--amber-ink); }
+.pill--lake { background: var(--teal); color: var(--teal-ink); }
+
+/* --- golden transition -------------------------------------------------------- */
+
+.transition {
+  min-height: 62vh;
+  min-height: 62svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 26px;
+  position: relative;
+}
+.ghost {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: clamp(110px, 28vw, 280px);
+  letter-spacing: .02em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(140, 90, 0, .2);
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ghost--quiet { -webkit-text-stroke-color: rgba(255, 255, 255, .35); }
+.transition-inner { position: relative; }
+.transition-line {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(28px, 6.4vw, 40px);
+  line-height: 1.2;
+  color: #7a4a00;
+}
+.transition-kicker {
+  margin: 14px 0 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: rgba(110, 70, 0, .65);
+}
+
+/* --- waterline marker: its document Y is the water surface (read by main.js) --- */
+
+#waterMark { height: 0; }
+
+/* --- passion -------------------------------------------------------------------- */
+
+.passion {
+  min-height: 70vh;
+  min-height: 70svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 22px;
+  max-width: 620px;
+  margin: 0 auto;
+  position: relative;
+}
+.passion-inner { position: relative; }
+.passion-line {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(30px, 6.8vw, 44px);
+  line-height: 1.2;
+  color: var(--ink-passion);
+}
+.passion-copy {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(4, 64, 58, .8);
+  margin: 14px 0 0;
+  max-width: 340px;
+}
+
+/* --- contact — eden ---------------------------------------------------------------- */
+
+.contact {
+  min-height: 78vh;
+  min-height: 78svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 22px;
+  max-width: 620px;
+  margin: 0 auto;
+}
+.contact-title {
+  margin: 0;
+  font-size: clamp(44px, 10vw, 76px);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ink-contact);
+}
+.contact-email {
+  display: inline-block;
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: clamp(16px, 4.2vw, 20px);
+  color: var(--pink);
+  text-decoration: none;
+  animation: glowPulse 3.5s ease-in-out infinite;
+  font-weight: 600;
+}
+.contact-note {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(6, 60, 52, .65);
+  margin: 28px 0 0;
+}
+
+/* --- footer — paradise --------------------------------------------------------------- */
+
+.footer {
+  padding: 0 22px 44px;
+  max-width: 620px;
+  margin: 0 auto;
+}
+.footer-flow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .16em;
+  color: rgba(6, 60, 52, .6);
+  line-height: 1.8;
+}
+.footer-links {
+  display: flex;
+  gap: 18px;
+  margin-top: 22px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .14em;
+}
+.footer-links a {
+  color: rgba(6, 60, 52, .65);
+  text-decoration: none;
+}
+.footer-legal {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .12em;
+  color: rgba(6, 60, 52, .45);
+  margin: 12px 0 0;
+  line-height: 1.7;
+}
+
+/* --- legal pages (Impressum / Privacy) ------------------------------------------------- */
+
+.legal {
+  min-height: 100vh;
+  min-height: 100svh;
+  background: linear-gradient(180deg, #aee4ff 0%, #c9ecff 45%, #ffe9b3 100%);
+}
+.legal-wrap {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 22px 22px 44px;
+}
+.legal-brand {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: rgba(13, 56, 56, .65);
+  line-height: 1.8;
+  text-decoration: none;
+}
+.legal-title {
+  margin: 54px 0 0;
+  font-size: clamp(40px, 9vw, 64px);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ink-contact);
+}
+.legal-sub {
+  margin: 14px 0 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(18px, 4.4vw, 22px);
+  color: rgba(13, 56, 56, .75);
+}
+.legal-card {
+  margin-top: 36px;
+  background: rgba(255, 255, 255, .55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(20, 60, 30, .15);
+  border-radius: 26px;
+  padding: 26px;
+  box-shadow: 0 16px 36px rgba(60, 90, 20, .15);
+}
+.legal-card section + section { margin-top: 26px; }
+.legal-kicker {
+  margin: 0 0 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  font-weight: 400;
+  color: rgba(13, 56, 56, .55);
+}
+.legal-card p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(13, 56, 56, .85);
+}
+.legal-card p + p { margin-top: 10px; }
+.legal-card a {
+  color: var(--teal-kicker);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-card a.legal-email {
+  font-family: var(--font-mono);
+  color: var(--pink);
+  font-weight: 600;
+  text-decoration: none;
+}
+.tbd {
+  font-family: var(--font-mono);
+  font-size: .85em;
+  color: var(--amber-kicker);
+  background: rgba(255, 181, 46, .18);
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+.legal-back { margin-top: 32px; }
+.legal-foot {
+  margin: 36px 0 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .12em;
+  color: rgba(6, 60, 52, .45);
+  line-height: 1.7;
+}
+
+/* --- keyframes --------------------------------------------------------------------------- */
+
+@keyframes cue {
+  0%, 100% { transform: translateY(0); opacity: .9; }
+  50% { transform: translateY(9px); opacity: .35; }
+}
+@keyframes glowPulse {
+  0%, 100% { text-shadow: 0 0 16px rgba(255, 79, 139, .45); }
+  50% { text-shadow: 0 0 38px rgba(255, 79, 139, .85); }
+}
+@keyframes hueflow {
+  0%, 100% { color: #0d8a76; text-shadow: 0 0 24px rgba(0, 194, 184, .4); }
+  33% { color: #ff8a3d; text-shadow: 0 0 24px rgba(255, 138, 61, .4); }
+  66% { color: #ff5e93; text-shadow: 0 0 24px rgba(255, 94, 147, .4); }
+}
+@keyframes bob {
+  from { transform: translateY(-5px) rotate(-0.3deg); }
+  to { transform: translateY(6px) rotate(0.35deg); }
+}
+
+/* --- reduced motion ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
+}

@@ -1,0 +1,6 @@
+# internal design handoff — not for the public repo
+design_handoff_chasing_flow/
+
+# local tool state
+.claude/settings.local.json
+.DS_Store

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chasing Flow — Lose the noise. Find the flow.</title>
+  <meta name="description" content="Chasing Flow is a Swiss iOS studio building apps for the pursuits that take us into flow — HuntMate for the hunt in Graubünden, Lake Zürich for open water.">
+  <meta name="theme-color" content="#aee4ff">
+  <!-- TODO(client): confirm domain (chasingflow.ch assumed) -->
+  <link rel="canonical" href="https://chasingflow.ch/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Chasing Flow">
+  <meta property="og:title" content="Chasing Flow — Lose the noise. Find the flow.">
+  <meta property="og:description" content="A Swiss iOS studio building apps for the pursuits that take us into flow — HuntMate for the hunt in Graubünden, Lake Zürich for open water.">
+  <meta property="og:url" content="https://chasingflow.ch/">
+  <meta name="twitter:card" content="summary">
+  <!-- TODO(client): og:image once a brand asset exists -->
+  <!-- TODO(client): Smart App Banners once App Store IDs exist, e.g.
+       <meta name="apple-itunes-app" content="app-id=XXXXXXXXXX"> -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23aee4ff'/%3E%3Ccircle cx='41' cy='23' r='11' fill='%23ffb340'/%3E%3Cpath d='M0 42c10-7 22-7 32 0s22 7 32 0v22H0z' fill='%232fcabe'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&amp;family=Instrument+Serif:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+
+  <!-- Full-viewport scene: sky → peaks → water → Eden light. Painted by main.js. -->
+  <canvas id="cv" aria-hidden="true"></canvas>
+
+  <!-- Flow meter HUD — mix-blend-mode:difference keeps it legible over sky and water -->
+  <div class="hud" aria-hidden="true">
+    <div class="hud-flow" id="flowV">FLOW 0%</div>
+    <div class="hud-zone" id="zoneC">THE NOISE</div>
+  </div>
+
+  <main class="content">
+
+    <section class="hero">
+      <p class="hero-label">CHASING FLOW<br>iOS · SWITZERLAND</p>
+      <div>
+        <h1 class="hero-title">
+          <span class="hl" id="hl1">Lose</span><br>
+          <span class="hl" id="hl2">the noise.</span><br>
+          <span class="hl" id="hl3">Find</span><br>
+          <span class="hl" id="hl4"><span class="hueflow">the flow.</span></span>
+        </h1>
+        <p class="hero-tagline">a stream at dawn, a ridge at 2,000 m, open water, an empty road.</p>
+      </div>
+      <div class="cue" id="cueWrap"><span>FOLLOW THE SUN ↓</span></div>
+    </section>
+
+    <section class="manifesto" data-reveal>
+      <p class="manifesto-line">Flow — the best state there is. The world goes quiet, and you are absolutely present.</p>
+      <p class="manifesto-kicker">WE DESIGN APPS FOR THE PURSUITS THAT TAKE US THERE</p>
+    </section>
+
+    <section class="app app--hunt">
+      <p class="app-kicker" data-reveal>ALTITUDE 2,000 M — THE HUNT</p>
+      <article class="card card--hunt" data-reveal>
+        <div class="card-head">
+          <div class="icon-slot" aria-hidden="true"></div><!-- placeholder: real HuntMate icon TBD -->
+          <div>
+            <h2 class="app-name">HuntMate</h2>
+            <p class="app-meta">HUNTING · GRAUBÜNDEN</p>
+          </div>
+        </div>
+        <p class="app-blurb">The hunting companion for Graubünden. Zones, seasons, safety — in your pocket.</p>
+        <div class="shot-slot">huntmate screens</div><!-- placeholder: real screenshots TBD -->
+        <!-- TODO(client): real App Store URL; then add target="_blank" rel="noopener" -->
+        <a class="pill pill--hunt" href="#" title="App Store link coming">APP STORE ↗</a>
+      </article>
+    </section>
+
+    <section class="transition">
+      <div class="ghost" aria-hidden="true">FLOW</div>
+      <div class="transition-inner" data-reveal>
+        <p class="transition-line">Then we chase it<br>down to the water.</p>
+        <p class="transition-kicker">LAKE ZÜRICH · OPEN WATER</p>
+      </div>
+    </section>
+
+    <!-- The water surface: this marker's document Y anchors the canvas crossing -->
+    <div id="waterMark" aria-hidden="true"></div>
+
+    <section class="app app--lake">
+      <p class="app-kicker" data-reveal>INTO THE BLUE — THE LAKE</p>
+      <article class="card card--lake" data-reveal>
+        <div class="card-head">
+          <div class="icon-slot" aria-hidden="true"></div><!-- placeholder: real Lake Zürich icon TBD -->
+          <div>
+            <h2 class="app-name">Lake Zürich</h2>
+            <p class="app-meta">NAVIGATION · ON THE WATER</p>
+          </div>
+        </div>
+        <p class="app-blurb">The lake, decoded. Moorings, buoys and quiet bays — a destination for every boat.</p>
+        <div class="shot-slot">lake zürich screens</div><!-- placeholder: real screenshots TBD -->
+        <!-- TODO(client): real App Store URL; then add target="_blank" rel="noopener" -->
+        <a class="pill pill--lake" href="#" title="App Store link coming">APP STORE ↗</a>
+      </article>
+    </section>
+
+    <section class="passion">
+      <div class="ghost ghost--quiet" aria-hidden="true">QUIET</div>
+      <div class="passion-inner" data-reveal>
+        <h2 class="passion-line">We live these apps.</h2>
+        <p class="passion-copy">Built for our own streams, ridges and harbors. Used every single day — that's the whole quality process.</p>
+      </div>
+    </section>
+
+    <section class="contact">
+      <div data-reveal>
+        <h2 class="contact-title">Drop a line.</h2>
+        <!-- TODO(client): confirm real contact address (placeholder per handoff) -->
+        <a class="contact-email" href="mailto:hi@chasingflow.ch">hi@chasingflow.ch</a>
+        <p class="contact-note">Chasing Flow — named for the state we find on streams, summits and open water. See you out there.</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p class="footer-flow">— FLOW 100% · PARADISE FOUND<br>YOU FOUND IT. STAY A WHILE.</p>
+      <div class="footer-links">
+        <a href="impressum.html">IMPRESSUM</a>
+        <a href="privacy.html">PRIVACY</a>
+      </div>
+      <p class="footer-legal">© 2026 CHASING FLOW · MADE IN SWITZERLAND<br>ABOVE 2,000 M OR OUT ON THE WATER</p>
+    </footer>
+
+  </main>
+
+</body>
+</html>
