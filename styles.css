@@ -257,6 +257,31 @@ a:focus-visible {
   color: rgba(4, 63, 58, .6);
 }
 
+/* Filled slot: placeholder stripes give way to a swipeable strip of shots.
+   The cut-off tile at the card edge is the scroll affordance. */
+.shot-slot--filled {
+  justify-content: flex-start;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.shot-slot--filled::-webkit-scrollbar { display: none; }
+.card--lake .shot-slot--filled {
+  background: none;
+  border: none;
+}
+.shot-slot--filled img {
+  height: 100%;
+  width: auto;
+  flex: none;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 150, 140, .25);
+  scroll-snap-align: start;
+}
+
 .pill {
   display: inline-flex;
   margin-top: 18px;
