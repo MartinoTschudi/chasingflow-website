@@ -48,7 +48,8 @@ python3 -m http.server 4173
 
 Pushed to `main` → deployed to **GitHub Pages** by [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
 (only the site files are published; repo docs and tooling are excluded from the artifact).
-Custom domain: **chasingflow.ch** — DNS must point the apex to GitHub Pages:
+Custom domain: **www.chasingflow.ch** (primary; the apex `chasingflow.ch` redirects to it —
+GitHub's recommended setup). DNS at Hostpoint:
 
 | Type | Host | Value |
 | --- | --- | --- |
