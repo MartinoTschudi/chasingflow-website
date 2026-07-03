@@ -257,6 +257,11 @@ a:focus-visible {
   color: rgba(4, 63, 58, .6);
 }
 
+.card--lake .icon-slot--filled {
+  background: none;
+  display: block;
+}
+
 /* Filled slot: placeholder stripes give way to a swipeable strip of shots.
    The cut-off tile at the card edge is the scroll affordance. */
 .shot-slot--filled {
