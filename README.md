@@ -65,8 +65,9 @@ After DNS propagates, enable **Enforce HTTPS** in the repo's Pages settings
 Marked with `TODO(client)` in the HTML and amber `[placeholder]` chips on the legal pages:
 
 1. App Store URLs for both pills (then add `target="_blank" rel="noopener"`).
-2. Real contact email — `hi@chasingflow.ch` is the handoff placeholder.
-3. Real app icons + screenshots for the striped placeholder slots.
-4. Impressum: legal entity, address, responsible person. Privacy: hosting provider, app policy links.
+2. Real app icons + screenshots for the striped placeholder slots.
+3. Impressum: street + postal code/town still missing.
+4. Privacy: link the app privacy policies once the App Store pages exist.
 5. OG image + Smart App Banner metas (`apple-itunes-app`) once App IDs exist.
-6. Confirm domain (`chasingflow.ch` assumed — canonical/OG URLs).
+6. Contact email is `marti.tschudi@gmail.com` for now — swap to a chasingflow.ch
+   mailbox later if one is created (index, impressum, privacy).
