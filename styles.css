@@ -257,7 +257,8 @@ a:focus-visible {
   color: rgba(4, 63, 58, .6);
 }
 
-.card--lake .icon-slot--filled {
+.card--lake .icon-slot--filled,
+.card--hunt .icon-slot--filled {
   background: none;
   display: block;
 }
@@ -274,7 +275,8 @@ a:focus-visible {
   scrollbar-width: none;
 }
 .shot-slot--filled::-webkit-scrollbar { display: none; }
-.card--lake .shot-slot--filled {
+.card--lake .shot-slot--filled,
+.card--hunt .shot-slot--filled {
   background: none;
   border: none;
 }
@@ -286,6 +288,7 @@ a:focus-visible {
   border: 1px solid rgba(0, 150, 140, .25);
   scroll-snap-align: start;
 }
+.card--hunt .shot-slot--filled img { border-color: rgba(200, 140, 20, .3); }
 
 .pill {
   display: inline-flex;
