@@ -620,7 +620,7 @@
     else if (sc < surf) zone = 'GOLDEN HOUR';
     else if (deepF < 0.02) zone = 'OPEN WATER · SURFACE';
     else if (deepF < 0.75) zone = 'INTO THE BLUE';
-    else zone = 'EDEN · PURE FLOW';
+    else zone = 'DEEP WATER';
     if (flowEl && lastFlowTxt !== txt) { lastFlowTxt = txt; flowEl.textContent = txt; }
     if (zoneEl && lastZone !== zone) { lastZone = zone; zoneEl.textContent = zone; }
   }
