@@ -46,6 +46,50 @@
     revealEls.forEach(function (el) { io.observe(el); });
   }
 
+  // --- contact form: AJAX submit to Web3Forms --------------------------------------
+  // Posts in-page so the visitor never leaves the scene. The <form> action/method
+  // stay as a no-JS fallback. The inbox address lives in a Web3Forms access key,
+  // never in the page source.
+  var cform = document.getElementById('contactForm');
+  if (cform) {
+    var cstatus = cform.querySelector('.contact-status');
+    var csend = cform.querySelector('.contact-send');
+    var setStatus = function (msg, state) {
+      if (!cstatus) return;
+      cstatus.textContent = msg || '';
+      if (state) cstatus.setAttribute('data-state', state);
+      else cstatus.removeAttribute('data-state');
+    };
+    cform.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var hp = cform.elements.botcheck;
+      if (hp && hp.checked) return; // honeypot tripped — drop it, say nothing
+      var data = {};
+      new FormData(cform).forEach(function (v, k) { data[k] = v; });
+      if (csend) csend.disabled = true;
+      setStatus('Sending…');
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (r) { return r.json().catch(function () { return {}; }); })
+        .then(function (res) {
+          if (csend) csend.disabled = false;
+          if (res && res.success) {
+            cform.reset();
+            setStatus('Thanks — your message is on its way. We’ll reply by email.', 'ok');
+          } else {
+            setStatus((res && res.message) || 'Something went wrong. Please try again in a moment.', 'error');
+          }
+        })
+        .catch(function () {
+          if (csend) csend.disabled = false;
+          setStatus('Network hiccup — please try again in a moment.', 'error');
+        });
+    });
+  }
+
   // --- scene ---------------------------------------------------------------------
   var canvas = document.getElementById('cv');
   if (!canvas || !canvas.getContext) return; // page remains a readable document

@@ -136,8 +136,27 @@
     <section class="contact">
       <div data-reveal>
         <h2 class="contact-title">Drop a line.</h2>
-        <a class="contact-email" href="mailto:marti.tschudi@gmail.com">marti.tschudi@gmail.com</a>
-        <p class="contact-note">Chasing Flow is a Swiss iOS studio. Questions, feedback and feature requests are always welcome.</p>
+        <form class="contact-form" id="contactForm" method="POST" action="https://api.web3forms.com/submit">
+          <!-- Web3Forms public access key — submissions are forwarded to the studio inbox. -->
+          <input type="hidden" name="access_key" value="74a05639-ad5d-4558-909b-7c126608e9c2">
+          <input type="hidden" name="subject" value="New message via chasingflow.ch">
+          <input type="hidden" name="from_name" value="chasingflow.ch">
+          <!-- honeypot: off-screen for people, tempting to bots -->
+          <input type="checkbox" name="botcheck" class="contact-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <label class="contact-field">
+            <span class="contact-flabel">YOUR EMAIL</span>
+            <input class="contact-input" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+          </label>
+          <label class="contact-field">
+            <span class="contact-flabel">MESSAGE</span>
+            <textarea class="contact-input" name="message" rows="4" required placeholder="Questions, feedback, a feature you wish existed…"></textarea>
+          </label>
+
+          <button type="submit" class="contact-send">SEND ↗</button>
+          <p class="contact-status" role="status" aria-live="polite"></p>
+        </form>
+        <p class="contact-note">Chasing Flow is a Swiss iOS studio. Questions, feedback and feature requests are always welcome — we reply by email.</p>
       </div>
     </section>
 
